@@ -54,3 +54,13 @@ The error was basically telling me that my network connection was public and I h
 <img width="370" height="260" alt="image" src="https://github.com/user-attachments/assets/ebf5ef69-9875-4017-a047-e0b51be0ce21" />
 
 So to bypass this error I have to Disable ethernet 1, then do the command and renable the ethernet after.
+<img width="543" height="176" alt="image" src="https://github.com/user-attachments/assets/66dad86f-5ebd-402b-abc6-da9f3dd702ed" />
+<img width="355" height="142" alt="image" src="https://github.com/user-attachments/assets/496dfa59-f37c-4775-aff5-d9ddb2183f87" />
+
+Now that I got it working, I ran the Test-WSMan command on DC01 which checks whether a computer’s Windows Remote Management service responds over the network.
+<img width="604" height="376" alt="image" src="https://github.com/user-attachments/assets/0fa994e2-9964-43f7-81a4-ddd41862aaa2" />
+
+I then ran a command that sends another command to both PC-A01/B01 to give me the hostname of the device.
+<img width="628" height="86" alt="Screenshot 2026-10-08 232520" src="https://github.com/user-attachments/assets/0f2330d8-54b5-4b38-96f5-ecb7d9c1f1f1" />
+
+Now we have verified that the scripts are actually working.
