@@ -116,3 +116,29 @@ This script will check each of the machines for any error events recorded during
 <img width="686" height="366" alt="image" src="https://github.com/user-attachments/assets/d5f291fe-293e-4f09-815c-94399082692a" />
 <img width="1019" height="496" alt="image" src="https://github.com/user-attachments/assets/dae2efd6-d756-4cf6-8f76-5ad20b696ee6" />
 <img width="1019" height="453" alt="image" src="https://github.com/user-attachments/assets/ecfbe80d-8836-49c9-9472-5d4fe53e90e2" />
+
+<h2>Script Scheduling</h2>
+For the last part of this lab I will be using Task Scheduler to put my scripts on a schedule to run automatically.
+<img width="625" height="475" alt="image" src="https://github.com/user-attachments/assets/9f4bb1b2-0601-4f05-980e-e86df66ae162" />
+<img width="625" height="472" alt="image" src="https://github.com/user-attachments/assets/eadc77ee-4437-4ce5-9a6b-7be6512315de" />
+<img width="624" height="472" alt="image" src="https://github.com/user-attachments/assets/a351f725-85ae-41fb-b547-e3f680395e73" />
+<img width="623" height="470" alt="image" src="https://github.com/user-attachments/assets/4e14b3cf-0fb4-41db-a11f-9e821572bee1" />
+
+Now with everything set I'll run the task to see if it works.
+<img width="706" height="218" alt="image" src="https://github.com/user-attachments/assets/69d202db-f967-4eee-8760-61eb2aa748c1" />
+<img width="748" height="151" alt="image" src="https://github.com/user-attachments/assets/edd9178a-a1eb-4601-a4aa-f6920313e9a8" />
+
+It created a new Inventory file and everything was a success
+I also created two new tasks for the other two scripts
+
+
+
+## Conclusion
+
+This PowerShell System Administration Automation Lab helped me develop practical scripting and troubleshooting skills using my existing VirtualBox environment. Working with DC01, PC-A01, and PC-B01, I practiced configuring PowerShell remoting, collecting computer inventories, checking disk space and service status, and reviewing Windows System error events. My scripts organized the results into dated CSV reports and text logs, making information from multiple computers easier to review.
+
+The lab also strengthened my understanding of error handling and remote administration. Troubleshooting the Public and Domain network profiles showed me how network configuration affects remote management. Recording collection failures demonstrated why scripts should handle unavailable computers without stopping the entire process. Configuring Windows Task Scheduler introduced me to automating recurring work and checking generated files to verify execution.
+
+These activities provided experience relevant to IT Support, Helpdesk, and Junior System Administrator roles. I gained a better understanding of how PowerShell can reduce repetitive tasks, support consistent monitoring, and produce useful documentation for troubleshooting. Future improvements include automating employee onboarding and offboarding, testing file backups and restoration, and using a dedicated account with limited permissions for scheduled tasks.
+
+In part 2 I will create scripts to automate the Active Directory instead of System Health checks and errors.
