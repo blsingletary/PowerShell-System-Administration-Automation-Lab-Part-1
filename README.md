@@ -44,6 +44,8 @@ Technologies Used
 - VirtualBox snapshots
 - GitHub for project documentation
 
+<h2>Setup</h2>
+
 I began this lab by creating clones of the machines I created in my Active Directory Lab.
 <img width="598" height="543" alt="image" src="https://github.com/user-attachments/assets/6c9f2d27-5488-4899-ad41-e85c896eb991" />
 
@@ -64,3 +66,19 @@ I then ran a command that sends another command to both PC-A01/B01 to give me th
 <img width="628" height="86" alt="Screenshot 2026-10-08 232520" src="https://github.com/user-attachments/assets/0f2330d8-54b5-4b38-96f5-ecb7d9c1f1f1" />
 
 Now we have verified that the scripts are actually working.
+
+<h2>Folder Creation</h2>
+Next step I created folders on the Admin PC using the New-Item command.
+<img width="897" height="269" alt="image" src="https://github.com/user-attachments/assets/82fe3f34-dc84-417c-8451-0cad22c3cbbf" />
+This script created three new folders:
+The Scripts folder which I can use to store all my powershell scripts
+The Reports folder to store information about computer inventory and health reports
+and The Logs folder to store script execution details and errors
+
+Now the folder is visible in file explorer
+<img width="761" height="278" alt="image" src="https://github.com/user-attachments/assets/f4a84a41-a961-49a9-9fb2-43ff402471dc" />
+
+<h2>Script Creation</h2>
+Now that I have a folder where I can store my scripts I can start making them
+This time I'll be using Powershell ISE since it supports the creation of scripts
+For my first script I'm going to make one that collects the basic system information 
