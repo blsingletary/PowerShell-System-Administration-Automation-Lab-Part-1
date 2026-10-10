@@ -1,4 +1,4 @@
-# PowerShell-System-Administration-Automation-Lab
+# PowerShell System Administration Automation Lab Part 1
 
 Project Overview
 I created this PowerShell home lab in Oracle VirtualBox to develop practical automation skills commonly required for entry-level IT Support, Helpdesk, and Junior System Administrator positions.
