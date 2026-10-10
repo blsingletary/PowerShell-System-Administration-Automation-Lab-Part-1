@@ -1,12 +1,12 @@
 # PowerShell System Administration Automation Lab Part 1
 
-Project Overview
+<h3>Project Overview</h3>
 I created this PowerShell home lab in Oracle VirtualBox to develop practical automation skills commonly required for entry-level IT Support, Helpdesk, and Junior System Administrator positions.
 The lab uses my existing Windows Server 2019 domain controller, DC01, and Windows client computers, PC-A01 and PC-B01. These machines simulate a small business environment where administrators manage employee accounts, maintain computers, monitor system health, and perform routine support tasks.
 Throughout this project, I will use PowerShell scripts to collect device inventories, generate system health reports, create and manage Active Directory users, perform employee onboarding and offboarding, back up sample files, and schedule recurring administrative tasks.
 This document will record my scripts, configuration steps, screenshots, troubleshooting, and verification results as I complete the lab.
 
-Lab Objectives
+<h3>Lab Objectives</h3>
 
 The main objectives of this project are to:
 - Use my existing VirtualBox machines to build a system administration automation lab
@@ -25,7 +25,7 @@ The main objectives of this project are to:
 - Develop PowerShell experience that can be demonstrated in the workplace
 
 
-Technologies Used
+<h3>Technologies Used</h3>
 - Oracle VirtualBox
 - Windows Server 2019
 - Windows 10 or Windows 11
@@ -43,40 +43,41 @@ Technologies Used
 - Robocopy for file backup automation
 - VirtualBox snapshots
 - GitHub for project documentation
-
+</br>
+<div align="center">
 <h2>Setup</h2>
 
-I began this lab by creating clones of the machines I created in my Active Directory Lab.
-<img width="598" height="543" alt="image" src="https://github.com/user-attachments/assets/6c9f2d27-5488-4899-ad41-e85c896eb991" />
+I began this lab by creating clones of the machines I created in my <a href="https://github.com/blsingletary/Active-Directory-and-Group-Policy-Managment-Lab">Active Directory Lab.</a>
+<img width="598" height="543" alt="image" src="https://github.com/user-attachments/assets/6c9f2d27-5488-4899-ad41-e85c896eb991" /></br>
 
 So the first thing I should do before I start scripting is to enable my Client PCs (PC-A01 & PC-B01) to receive powershell commands from another computer, but I came across a small issue.
-<img width="969" height="424" alt="image" src="https://github.com/user-attachments/assets/be1675e7-45af-46de-8d14-d17ec13a02e8" />
+<img width="969" height="424" alt="image" src="https://github.com/user-attachments/assets/be1675e7-45af-46de-8d14-d17ec13a02e8" /></br>
 
 The error was basically telling me that my network connection was public and I have to set it to Domain or Private, but the issue is that it should be set to Domain already. So I ran the command "Get-NetConnectionProfile" to see what the network is set to, and I figured out that it was Ethernet 1 which connects to the internet is set to public and Ethernet 2 which is connected to the other endpoints is set to Domain.
-<img width="370" height="260" alt="image" src="https://github.com/user-attachments/assets/ebf5ef69-9875-4017-a047-e0b51be0ce21" />
+<img width="370" height="260" alt="image" src="https://github.com/user-attachments/assets/ebf5ef69-9875-4017-a047-e0b51be0ce21" /></br>
 
 So to bypass this error I have to Disable ethernet 1, then do the command and renable the ethernet after.
-<img width="543" height="176" alt="image" src="https://github.com/user-attachments/assets/66dad86f-5ebd-402b-abc6-da9f3dd702ed" />
-<img width="355" height="142" alt="image" src="https://github.com/user-attachments/assets/496dfa59-f37c-4775-aff5-d9ddb2183f87" />
+<img width="543" height="176" alt="image" src="https://github.com/user-attachments/assets/66dad86f-5ebd-402b-abc6-da9f3dd702ed" /></br>
+<img width="355" height="142" alt="image" src="https://github.com/user-attachments/assets/496dfa59-f37c-4775-aff5-d9ddb2183f87" /></br>
 
-Now that I got it working, I ran the Test-WSMan command on DC01 which checks whether a computer’s Windows Remote Management service responds over the network.
-<img width="604" height="376" alt="image" src="https://github.com/user-attachments/assets/0fa994e2-9964-43f7-81a4-ddd41862aaa2" />
+Now that I got it working, I ran the Test-WSMan command on DC01 which checks whether a computer’s Windows Remote Management service responds over the network.</br>
+<img width="604" height="376" alt="image" src="https://github.com/user-attachments/assets/0fa994e2-9964-43f7-81a4-ddd41862aaa2" /></br>
 
 I then ran a command that sends another command to both PC-A01/B01 to give me the hostname of the device.
-<img width="628" height="86" alt="Screenshot 2026-10-08 232520" src="https://github.com/user-attachments/assets/0f2330d8-54b5-4b38-96f5-ecb7d9c1f1f1" />
+<img width="628" height="86" alt="Screenshot 2026-10-08 232520" src="https://github.com/user-attachments/assets/0f2330d8-54b5-4b38-96f5-ecb7d9c1f1f1" /></br>
 
 Now we have verified that the scripts are actually working.
-
+</br>
 <h2>Folder Creation</h2>
 Next step I created folders on the Admin PC using the New-Item command.
-<img width="897" height="269" alt="image" src="https://github.com/user-attachments/assets/82fe3f34-dc84-417c-8451-0cad22c3cbbf" />
+<img width="897" height="269" alt="image" src="https://github.com/user-attachments/assets/82fe3f34-dc84-417c-8451-0cad22c3cbbf" /></br></br>
 This script created three new folders:
 The Scripts folder which I can use to store all my powershell scripts
 The Reports folder to store information about computer inventory and health reports
 and The Logs folder to store script execution details and errors
 
 Now the folder is visible in file explorer
-<img width="761" height="278" alt="image" src="https://github.com/user-attachments/assets/f4a84a41-a961-49a9-9fb2-43ff402471dc" />
+<img width="761" height="278" alt="image" src="https://github.com/user-attachments/assets/f4a84a41-a961-49a9-9fb2-43ff402471dc" /></br>
 
 <h2>Script #1 Lab Inventory</h2>
 Now that I have a folder where I can store my scripts I can start making them
@@ -84,38 +85,40 @@ This time I'll be using Powershell ISE since it supports the creation of scripts
 For my first script I'm going to make one that collects the basic system information of our machines
 
 I created a new powershell file and named it Get-LabInventory
-<img width="1403" height="731" alt="image" src="https://github.com/user-attachments/assets/7b83edc3-1405-4ca0-a2e7-aca58644c311" />
+<img width="1403" height="731" alt="image" src="https://github.com/user-attachments/assets/7b83edc3-1405-4ca0-a2e7-aca58644c311" /></br>
 
-Now for the actual script
-<img width="775" height="715" alt="image" src="https://github.com/user-attachments/assets/f7f06be3-27aa-43a0-b702-5ac612cfbdb0" />
-<img width="764" height="181" alt="image" src="https://github.com/user-attachments/assets/e55c58d5-94a8-49f7-bbdc-bdd4bfcde8c2" />
+Now for the actual script</br>
+<img width="775" height="715" alt="image" src="https://github.com/user-attachments/assets/f7f06be3-27aa-43a0-b702-5ac612cfbdb0" /></br>
+<img width="764" height="181" alt="image" src="https://github.com/user-attachments/assets/e55c58d5-94a8-49f7-bbdc-bdd4bfcde8c2" /></br>
 
 
-Basically what this script does is it sends out a command that all machines (DC01, PC-A01, & PC-B01) receive and creates a timestamp of the current date and time. It processes each of the selected machines to retrieve the basic system information from them like the Computer name, Windows Version, Ram, and Disk Size. It also lists if there was an error during this process. After it finishes processing each of the machines, it creates a csv file in the Reports folder which I can view using the Notepad App.
-<img width="750" height="149" alt="image" src="https://github.com/user-attachments/assets/15787686-1ec7-4588-a3d6-cb16bc070011" />
+Basically what this script does is it sends out a command that all machines (DC01, PC-A01, & PC-B01) receive and creates a timestamp of the current date and time. It processes each of the selected machines to retrieve the basic system
+information from them like the Computer name, Windows Version, Ram, and Disk Size. It also lists if there was an error during this process. 
+After it finishes processing each of the machines, it creates a csv file in the Reports folder which I can view using the Notepad App.
+<img width="750" height="149" alt="image" src="https://github.com/user-attachments/assets/15787686-1ec7-4588-a3d6-cb16bc070011" /></br>
 
 Now lets see what happens when I run the script while PC-B01 is turned off.
-<img width="750" height="132" alt="image" src="https://github.com/user-attachments/assets/e14c56c6-0866-4874-918c-973f3d9bb968" />
-<img width="1379" height="138" alt="image" src="https://github.com/user-attachments/assets/89666cf2-1a9d-4dfa-b13d-9f34f8466041" />
-
+<img width="750" height="132" alt="image" src="https://github.com/user-attachments/assets/e14c56c6-0866-4874-918c-973f3d9bb968" /></br>
+<img width="1379" height="138" alt="image" src="https://github.com/user-attachments/assets/89666cf2-1a9d-4dfa-b13d-9f34f8466041" /></br>
+</br>
 <h2>Script #2 Lab Health</h2>
-Now for the next script
-<img width="679" height="1113" alt="image" src="https://github.com/user-attachments/assets/a0fa49c5-d2ad-48c0-bc14-84b4d6ede171" />
+Now for the next script</br>
+<img width="679" height="1113" alt="image" src="https://github.com/user-attachments/assets/a0fa49c5-d2ad-48c0-bc14-84b4d6ede171" /></br></br>
 
 This script will give us the status of the overall heatlh of each machine by checking:
 Available storage remaining, if WinRM and Netlogon are running, and Active Directory and DNS. Based on these factors the script will give each machine a label (Healthy, Warning, Failed)
-<img width="466" height="155" alt="image" src="https://github.com/user-attachments/assets/15b9b706-172a-45a4-99f8-a0a24d14bed5" />
-<img width="779" height="133" alt="image" src="https://github.com/user-attachments/assets/932446d2-83f2-4f7e-bee5-d4e0c4a00342" />
-
+<img width="466" height="155" alt="image" src="https://github.com/user-attachments/assets/15b9b706-172a-45a4-99f8-a0a24d14bed5" /></br>
+<img width="779" height="133" alt="image" src="https://github.com/user-attachments/assets/932446d2-83f2-4f7e-bee5-d4e0c4a00342" /></br>
+</br>
 <h2>Script #3 Errors</h2>
-Now for the last script
-<img width="689" height="952" alt="image" src="https://github.com/user-attachments/assets/1ba259c3-596d-4d05-b1b5-b161785c8bb1" />
-<img width="561" height="333" alt="image" src="https://github.com/user-attachments/assets/b098ec70-482d-41ab-a6dc-7ca76559728e" />
-
+Now for the last script</br>
+<img width="689" height="952" alt="image" src="https://github.com/user-attachments/assets/1ba259c3-596d-4d05-b1b5-b161785c8bb1" /></br>
+<img width="561" height="333" alt="image" src="https://github.com/user-attachments/assets/b098ec70-482d-41ab-a6dc-7ca76559728e" /></br>
+</br>
 This script will check each of the machines for any error events recorded during the last 24 hours. It collects Each event's time, ID, source, and message. It will then save a csv file into the reports folder, but it will also save it to the logs fiolder as well.
-<img width="686" height="366" alt="image" src="https://github.com/user-attachments/assets/d5f291fe-293e-4f09-815c-94399082692a" />
-<img width="1019" height="496" alt="image" src="https://github.com/user-attachments/assets/dae2efd6-d756-4cf6-8f76-5ad20b696ee6" />
-<img width="1019" height="453" alt="image" src="https://github.com/user-attachments/assets/ecfbe80d-8836-49c9-9472-5d4fe53e90e2" />
+<img width="686" height="366" alt="image" src="https://github.com/user-attachments/assets/d5f291fe-293e-4f09-815c-94399082692a" /></br>
+<img width="1019" height="496" alt="image" src="https://github.com/user-attachments/assets/dae2efd6-d756-4cf6-8f76-5ad20b696ee6" /></br>
+<img width="1019" height="453" alt="image" src="https://github.com/user-attachments/assets/ecfbe80d-8836-49c9-9472-5d4fe53e90e2" /></br>
 
 <h2>Script Scheduling</h2>
 For the last part of this lab I will be using Task Scheduler to put my scripts on a schedule to run automatically.
@@ -123,15 +126,16 @@ For the last part of this lab I will be using Task Scheduler to put my scripts o
 <img width="625" height="472" alt="image" src="https://github.com/user-attachments/assets/eadc77ee-4437-4ce5-9a6b-7be6512315de" />
 <img width="624" height="472" alt="image" src="https://github.com/user-attachments/assets/a351f725-85ae-41fb-b547-e3f680395e73" />
 <img width="623" height="470" alt="image" src="https://github.com/user-attachments/assets/4e14b3cf-0fb4-41db-a11f-9e821572bee1" />
-
+</br></br>
 Now with everything set I'll run the task to see if it works.
-<img width="706" height="218" alt="image" src="https://github.com/user-attachments/assets/69d202db-f967-4eee-8760-61eb2aa748c1" />
-<img width="748" height="151" alt="image" src="https://github.com/user-attachments/assets/edd9178a-a1eb-4601-a4aa-f6920313e9a8" />
-
+<img width="706" height="218" alt="image" src="https://github.com/user-attachments/assets/69d202db-f967-4eee-8760-61eb2aa748c1" /></br>
+<img width="748" height="151" alt="image" src="https://github.com/user-attachments/assets/edd9178a-a1eb-4601-a4aa-f6920313e9a8" /></br>
+</br>
 It created a new Inventory file and everything was a success
 I also created two new tasks for the other two scripts
+<img width="1423" height="144" alt="image" src="https://github.com/user-attachments/assets/88958c1d-65b7-40c9-b4e2-6382c2eff119" /></br>
 
-
+</div>
 
 ## Conclusion
 
@@ -141,4 +145,4 @@ The lab also strengthened my understanding of error handling and remote administ
 
 These activities provided experience relevant to IT Support, Helpdesk, and Junior System Administrator roles. I gained a better understanding of how PowerShell can reduce repetitive tasks, support consistent monitoring, and produce useful documentation for troubleshooting. Future improvements include automating employee onboarding and offboarding, testing file backups and restoration, and using a dedicated account with limited permissions for scheduled tasks.
 
-In part 2 I will create scripts to automate the Active Directory instead of System Health checks and errors.
+In part 2 I will create scripts to automate the Active Directory aspect instead of System Health checks and errors.
