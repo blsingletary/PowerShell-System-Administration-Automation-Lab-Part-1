@@ -107,3 +107,12 @@ Available storage remaining, if WinRM and Netlogon are running, and Active Direc
 <img width="466" height="155" alt="image" src="https://github.com/user-attachments/assets/15b9b706-172a-45a4-99f8-a0a24d14bed5" />
 <img width="779" height="133" alt="image" src="https://github.com/user-attachments/assets/932446d2-83f2-4f7e-bee5-d4e0c4a00342" />
 
+<h2>Script #3 Errors</h2>
+Now for the last script
+<img width="689" height="952" alt="image" src="https://github.com/user-attachments/assets/1ba259c3-596d-4d05-b1b5-b161785c8bb1" />
+<img width="561" height="333" alt="image" src="https://github.com/user-attachments/assets/b098ec70-482d-41ab-a6dc-7ca76559728e" />
+
+This script will check each of the machines for any error events recorded during the last 24 hours. It collects Each event's time, ID, source, and message. It will then save a csv file into the reports folder, but it will also save it to the logs fiolder as well.
+<img width="686" height="366" alt="image" src="https://github.com/user-attachments/assets/d5f291fe-293e-4f09-815c-94399082692a" />
+<img width="1019" height="496" alt="image" src="https://github.com/user-attachments/assets/dae2efd6-d756-4cf6-8f76-5ad20b696ee6" />
+<img width="1019" height="453" alt="image" src="https://github.com/user-attachments/assets/ecfbe80d-8836-49c9-9472-5d4fe53e90e2" />
