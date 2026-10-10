@@ -78,7 +78,32 @@ and The Logs folder to store script execution details and errors
 Now the folder is visible in file explorer
 <img width="761" height="278" alt="image" src="https://github.com/user-attachments/assets/f4a84a41-a961-49a9-9fb2-43ff402471dc" />
 
-<h2>Script Creation</h2>
+<h2>Script #1 Lab Inventory</h2>
 Now that I have a folder where I can store my scripts I can start making them
 This time I'll be using Powershell ISE since it supports the creation of scripts
-For my first script I'm going to make one that collects the basic system information 
+For my first script I'm going to make one that collects the basic system information of our machines
+
+I created a new powershell file and named it Get-LabInventory
+<img width="1403" height="731" alt="image" src="https://github.com/user-attachments/assets/7b83edc3-1405-4ca0-a2e7-aca58644c311" />
+
+Now for the actual script
+<img width="775" height="715" alt="image" src="https://github.com/user-attachments/assets/f7f06be3-27aa-43a0-b702-5ac612cfbdb0" />
+<img width="764" height="181" alt="image" src="https://github.com/user-attachments/assets/e55c58d5-94a8-49f7-bbdc-bdd4bfcde8c2" />
+
+
+Basically what this script does is it sends out a command that all machines (DC01, PC-A01, & PC-B01) receive and creates a timestamp of the current date and time. It processes each of the selected machines to retrieve the basic system information from them like the Computer name, Windows Version, Ram, and Disk Size. It also lists if there was an error during this process. After it finishes processing each of the machines, it creates a csv file in the Reports folder which I can view using the Notepad App.
+<img width="750" height="149" alt="image" src="https://github.com/user-attachments/assets/15787686-1ec7-4588-a3d6-cb16bc070011" />
+
+Now lets see what happens when I run the script while PC-B01 is turned off.
+<img width="750" height="132" alt="image" src="https://github.com/user-attachments/assets/e14c56c6-0866-4874-918c-973f3d9bb968" />
+<img width="1379" height="138" alt="image" src="https://github.com/user-attachments/assets/89666cf2-1a9d-4dfa-b13d-9f34f8466041" />
+
+<h2>Script #2 Lab Health</h2>
+Now for the next script
+<img width="679" height="1113" alt="image" src="https://github.com/user-attachments/assets/a0fa49c5-d2ad-48c0-bc14-84b4d6ede171" />
+
+This script will give us the status of the overall heatlh of each machine by checking:
+Available storage remaining, if WinRM and Netlogon are running, and Active Directory and DNS. Based on these factors the script will give each machine a label (Healthy, Warning, Failed)
+<img width="466" height="155" alt="image" src="https://github.com/user-attachments/assets/15b9b706-172a-45a4-99f8-a0a24d14bed5" />
+<img width="779" height="133" alt="image" src="https://github.com/user-attachments/assets/932446d2-83f2-4f7e-bee5-d4e0c4a00342" />
+
